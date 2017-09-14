@@ -3,10 +3,14 @@ import { Route } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { fetchRecipes } from '../utils/api'
 import { capitalize } from '../utils/helpers'
+import { withRouter, Link } from 'react-router-dom'
+
+import HomeIcon from 'react-icons/lib/fa/home';
 import './App.css';
 
 import ListCategories from './listCategories'
-import CreatePost from './createPost'
+//import CreatePost from './createPost'
+import Category from './category'
 //import { getCategories } from '../actions/categoryActions';
 
 class App extends Component {
@@ -18,8 +22,19 @@ class App extends Component {
     //const categories = ['name': 'category 1'];
     return (
       <div className="App">
-          <ListCategories/>
-          <CreatePost post="{title: 'test', body: 'test', author: 'test'}"/>
+        <Link
+          className="appLink"
+          to="/"
+        ><HomeIcon size={40}/></Link>
+        <Route exact path="/" render={() => (
+          <div>
+            <ListCategories/>
+            {/*<CreatePost post="{title: 'test', body: 'test', author: 'test'}"/>*/}
+          </div>
+        )}/>
+        <Route path="/categories/:categoryPath" render={() => (
+          <Category />
+        )}/>
       </div>
     );
   }
@@ -37,4 +52,4 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(App);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(App));

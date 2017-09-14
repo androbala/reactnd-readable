@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { withRouter } from 'react-router-dom';
+import { withRouter, Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 import { getCategories } from '../actions/categoryActions';
@@ -13,12 +13,16 @@ class ListCategories extends Component {
   }
   render() {
     const { categories } = this.props;
+    /*categories.map((category) => {
+      category.url = 'categories/' + category.path;
+      return category;
+    })*/
     return (
       <div>
         <ul>
           {categories && categories.length > 0 && categories.map((category, index) => (
             <li key={index}>
-              {category.name}
+              <Link to={`/categories/${category.path}`}>{category.name}</Link>
             </li>
           ))}
       </ul>
@@ -41,4 +45,4 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(ListCategories);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(ListCategories));

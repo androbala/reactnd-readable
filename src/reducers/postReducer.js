@@ -6,7 +6,7 @@ import {
   //ADD_COMMENT
 } from './../actions/postActions'
 
-export default (state = {test_post: ''}, action) => {
+export default (state = {posts: []}, action) => {
   const { id, timestamp, title, body, author, category, voteScore } = action
 
   switch (action.type) {
