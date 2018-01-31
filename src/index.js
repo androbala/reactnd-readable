@@ -8,6 +8,7 @@ import logger from 'redux-logger'
 
 import reducer from './reducers';
 import './index.css';
+//import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
 import App from './components/App';
 import registerServiceWorker from './registerServiceWorker';
 

@@ -7,8 +7,8 @@ import { Link } from 'react-router-dom';
 import { getCategories } from './../actions/categoryActions';
 import { getPosts } from './../actions/postActions';
 
-import Post from './post';
-import CreatePost from './createPost';
+import Post from './Post';
+import PostForm from './PostForm';
 
 class Category extends Component {
 
@@ -38,12 +38,12 @@ class Category extends Component {
             return null;
         }
       }).map((post, index) => (
-      /*<div key={index}>
-        <Post key={index} postUuid={post.id} linkPost={"/categories/" + category.path + "/posts/" + post.id}/>
-      </div>*/
       <div key={index}>
-        {post.id}
+        <Post key={index} postUuid={post.id} linkPost={"/categories/" + category.path + "/posts/" + post.id}/>
       </div>
+      /*<div key={index}>
+        {post.id}
+      </div>*/
     ));
   }
 
@@ -56,7 +56,7 @@ class Category extends Component {
     const { category } = this.props;
     const postsView = this.getPostsView(category);
     const newPost = { category: category.path };
-    console.log(category);
+    console.log("IN CATEGORY");
     return (
       <div className="category">
         <div className="category-title">
@@ -82,7 +82,7 @@ class Category extends Component {
           onRequestClose={this.closeModal}
           contentLabel='Modal'
         >
-          <CreatePost closeForm={this.closeModal} isUpdate={false} post={newPost}/>
+          <PostForm closeForm={this.closeModal} isUpdate={false} post={newPost}/>
         </Modal>
       </div>
     );
@@ -91,13 +91,15 @@ class Category extends Component {
 }
 
 function mapStateToProps(state, props) {
+  console.log('IN CATEGORY');
+  console.log(props.match.params.categoryPath);
   const categoryPath = props.categoryPath || props.match.params.categoryPath;
   const posts = state.posts.posts.filter(post => post.category === categoryPath) || [];
   const postOrdered = posts.sort((post1, post2) => {
     return post2.voteScore - post1.voteScore;
   });
   const category = state.categories.categories.find(category => category.path === categoryPath) || {};
-  console.log(category);
+  //console.log(category);
   return {
     posts: postOrdered,
     category: category,

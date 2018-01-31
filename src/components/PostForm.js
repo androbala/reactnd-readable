@@ -4,7 +4,7 @@ import uuid from 'react-native-uuid';
 
 import { addPost, updatePost } from './../actions/postActions';
 
-class CreatePost extends Component {
+class PostForm extends Component {
 
   state = {
     title: '',
@@ -84,4 +84,4 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(CreatePost);
+export default connect(mapStateToProps, mapDispatchToProps)(PostForm);

@@ -8,17 +8,20 @@ import { withRouter, Link } from 'react-router-dom'
 import HomeIcon from 'react-icons/lib/fa/home';
 import './App.css';
 
-import ListCategories from './listCategories'
+import ListCategories from './ListCategories'
 //import CreatePost from './createPost'
-import Category from './category'
-//import { getCategories } from '../actions/categoryActions';
+import Category from './Category'
+import Post from './Post'
+import { getCategories } from '../actions/categoryActions';
+import { getPosts } from '../actions/postActions';
 
 class App extends Component {
-  /*componentDidMount() {
+  componentDidMount() {
     this.props.fetchCategories();
-  }*/
+    this.props.fetchPosts();
+  }
   render() {
-    //const { categories } = this.props;
+    const { categories } = this.props;
     //const categories = ['name': 'category 1'];
     return (
       <div className="App">
@@ -28,12 +31,15 @@ class App extends Component {
         ><HomeIcon size={40}/></Link>
         <Route exact path="/" render={() => (
           <div>
-            <ListCategories/>
+            <ListCategories categories={categories}/>
             {/*<CreatePost post="{title: 'test', body: 'test', author: 'test'}"/>*/}
           </div>
         )}/>
         <Route path="/categories/:categoryPath" render={() => (
           <Category />
+        )}/>
+        <Route path="/categories/:categoryUuid/posts/:postUuid" render={({ match }) => (
+          <Post linkPost={"/categories/" + match.params.categoryUuid + "/posts/" + match.params.postUuid }/>
         )}/>
       </div>
     );
@@ -42,13 +48,15 @@ class App extends Component {
 
 function mapStateToProps(state) {
   return {
-    //categories: state.categories ? state.categories : []
+    categories: state.categories ? state.categories.categories : [],
+    //posts: state.posts ? state.posts : []
   }
 }
 
 function mapDispatchToProps(dispatch) {
   return {
-    //fetchCategories: () => dispatch(getCategories())
+    fetchCategories: () => dispatch(getCategories()),
+    fetchPosts: () => dispatch(getPosts())
   };
 }
 
